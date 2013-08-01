@@ -1,3 +1,8 @@
 class Response < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :user_id, :answer_id
+
+  belongs_to :answer, :class_name => "Answer", :foreign_key => :answer_id, :primary_key => :id
+
+  has_one :question, :through => :answer, :source => :question
+
 end
