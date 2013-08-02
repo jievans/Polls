@@ -5,5 +5,8 @@ class Answer < ActiveRecord::Base
              :primary_key => :id
 
   has_many :responses, :class_name => "Response", :foreign_key => :answer_id,
-           :primary_key => :id
+           :primary_key => :id, :dependent => :destroy
+
+  validates :body, :presence => true
+  validates :question_id, :presence => true
 end

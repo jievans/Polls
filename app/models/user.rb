@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
 
   belongs_to :team, :class_name => "Team", :foreign_key => :team_id, :primary_key => :id
 
+  validates :name, :presence => true, :uniqueness => true
+  validates :team_id, :presence => true
+
   def take_poll
     available_polls = team.polls.where("user_id != ?", id)
     alphabet = PollRunner::ALPHABET

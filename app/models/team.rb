@@ -4,4 +4,6 @@ class Team < ActiveRecord::Base
   has_many :users, :class_name => "User", :foreign_key => :team_id, :primary_key => :id
 
   has_many :polls, :through => :users, :source => :polls
+
+  validates :name, :presence => true, :uniqueness => true
 end

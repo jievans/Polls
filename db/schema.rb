@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130801181810) do
+ActiveRecord::Schema.define(:version => 20130802001025) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -20,11 +20,15 @@ ActiveRecord::Schema.define(:version => 20130801181810) do
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
+
   create_table "polls", :force => true do |t|
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "polls", ["user_id"], :name => "index_polls_on_user_id"
 
   create_table "questions", :force => true do |t|
     t.integer  "poll_id"
@@ -33,12 +37,16 @@ ActiveRecord::Schema.define(:version => 20130801181810) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "questions", ["poll_id"], :name => "index_questions_on_poll_id"
+
   create_table "responses", :force => true do |t|
     t.integer  "user_id"
     t.integer  "answer_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "responses", ["user_id", "answer_id"], :name => "index_responses_on_user_id_and_answer_id"
 
   create_table "teams", :force => true do |t|
     t.string   "name"
@@ -52,5 +60,7 @@ ActiveRecord::Schema.define(:version => 20130801181810) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "users", ["team_id"], :name => "index_users_on_team_id"
 
 end

@@ -5,4 +5,13 @@ class Response < ActiveRecord::Base
 
   has_one :question, :through => :answer, :source => :question
 
+  after_destroy :log_destroy_action
+
+  validates :user_id, :presence => true
+  validates :answer_id, :presence => true
+
+  def log_destroy_action
+      puts "Response #{id} destroyed"
+  end
+
 end
