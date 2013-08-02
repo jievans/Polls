@@ -18,6 +18,16 @@ class Poll < ActiveRecord::Base
       chosen_answer = question_answers[alphabet.index(answer_letter)]
       Response.new(:user_id => user.id, :answer_id => chosen_answer.id).save!
     end
+    puts "Thanks for taking our poll!"
+  end
 
+  def print_results
+    ques_w_resp = questions.includes(:answers => [:responses])
+    ques_w_resp.each do |question|
+      results = {}
+      puts question.body
+      question.answers.each { |answer| results[answer.body] = answer.responses.length }
+      puts results
+    end
   end
 end

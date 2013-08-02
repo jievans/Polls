@@ -16,10 +16,18 @@ class User < ActiveRecord::Base
     poll_choice.run(self)
   end
 
-  def already_answered?(question)
+  def answered_question?(question)
     Response.where("user_id = ?", id).includes(:question).map do |response|
       response.question.id
     end.include?(question.id)
+  end
+
+  def get_responses
+    Response.find_all_by_user_id(id)
+  end
+
+  def get_polls
+    Poll.find_all_by_user_id(id)
   end
 
 end

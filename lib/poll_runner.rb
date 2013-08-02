@@ -8,9 +8,10 @@ class PollRunner
     Team.new(:name => name).save!
   end
 
-  def self.new_user(name, team_name)
+  def self.create_user(name, team_name)
     team = Team.find_by_name(team_name)
-    User.new(:name => name, :team_id => team.id).save!
+    @@current_user = User.new(:name => name, :team_id => team.id)
+    @@current_user.save!
   end
 
   def self.login(name)
@@ -42,7 +43,20 @@ class PollRunner
     end
   end
 
+  def self.take_poll
+    @@current_user.take_poll()
+  end
 
+  def self.get_results(poll_id)
+    Poll.find_by_id(poll_id).print_results
+  end
 
+  def self.get_polls
+    @@current_user.get_polls
+  end
+
+  def self.get_responses
+    @@current_user.get_responses
+  end
 
 end
